@@ -4,8 +4,7 @@
 5. status to enum +
 6. rename cer into ticket +
 7. group with logic -core into ticket, requests into ticket +
-8. Separate dev and prod server -
-9. autopep8 -
+8. Separate dev and prod server autopep8 -
 11. rename src into config +
 12. group with logic users and authentication -
 13. patch urls -
