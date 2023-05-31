@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html> 
+<html lang="ru"> 
+  <head>    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
+    <title>
+      {% block title %}{% endblock %}
+    </title>
+  </head>
+  <body>
+    {% include "includes/header.html" %}
+    <main>      
+      <div class="container-fluid mx-0 px-0">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </main>
+  </body>
+</html>

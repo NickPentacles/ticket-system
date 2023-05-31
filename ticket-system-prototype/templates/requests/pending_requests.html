@@ -1,0 +1,19 @@
+{% extends "includes/list.html" %}
+
+{% block title %}
+  Назначеные заявки
+{% endblock title %}
+
+{% block list %}
+<td>{{ i.creator }}</td>
+<td>{{ i.request.name }}</td>
+<td>{{ i.request.description }}</td>
+<td>{{ i.get_status_display }}</td>
+<td>{{ i.request.created }}</td>
+<td>{{ i.deadline }}</td>
+<td>
+  {% if i.status != "3" and i.status != "4" %}
+  <a href="{% url "requests:complete" i.id %}">Complete</a>
+  {% endif %}
+</td>
+{% endblock list %}

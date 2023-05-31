@@ -1,0 +1,8 @@
+{% csrf_token %}
+{% for i in form %}
+  <div class="form-outline mb-4">
+    {{ i }}
+    <label class="form-label">{{ i.label }}</label>
+    <div style="color: red">{{ i.errors }}</div>
+  </div>
+{% endfor %}

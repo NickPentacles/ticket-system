@@ -1,0 +1,11 @@
+{% block color %}
+{% if i.status == "3" %}
+    bg-success
+    {% elif i.status == "1" %}
+    bg-light
+    {% elif i.status == "2" %}
+    bg-warning
+    {% else %}  
+    bg-danger
+{% endif %}
+{% endblock color %}

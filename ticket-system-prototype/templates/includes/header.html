@@ -1,0 +1,37 @@
+{% load static %}
+{% csrf_token %}
+
+{% with user.is_authenticated as logged %}
+<header>
+  {% if logged %}
+  <nav class="navbar navbar-expand-sm navbar-dark"
+        style="background-color: #3B71CA">
+    <div class="collapse navbar-collapse">
+      <span style="color: #FBFBFB">{{ user.username }}</span>
+      <ul class="navbar-nav mr-auto ml-5">
+        <li class="nav-item ">
+          <a class="nav-link" href="{% url 'requests:create' %}">New Request</a>
+        </li>
+        <li class="nav-item ml-3">
+          <a class="nav-link" href="{% url 'requests:my_requests' %}">My Requests</a>
+        </li>
+        <li class="nav-item ml-3">
+          <a class="nav-link" href="{% url 'requests:pending' %}">Pending Requests</a>
+        </li>
+        <li class="nav-item ml-3">
+          <a class="nav-link" href="{% url 'requests:list' %}">All Requests</a>
+        </li>
+        {% if user.is_superuser %}
+        <li class="nav-item ml-3">
+          <a class="nav-link" href="{% url 'users:list' %}">Users</a>
+        </li>
+        {% endif %}
+      </ul>
+      <a class="nav-link " style="color: #FBFBFB" href="{% url 'authentication:logout' %}">
+        Logout
+      </a>
+    </div>
+    {% endif %}
+  </nav>
+</header>
+{% endwith %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block title %}
+  Создать заявку
+{% endblock title %}
+
+{% block content %}
+<div class="card-body py-5">
+    <div class="row justify-content-center">
+      <div class="d-flex justify-content-center mx-4 mb-4">
+        {{ form.non_field_errors }}
+      </div>
+    <form class="mx-1 mx-md-4" method="post" >
+        {% include 'includes/auth.html' %}
+        {% block submit %}
+        <button type="submit" class="btn">Create</button>
+        <a href="{% url 'requests:list' %}" class="btn mx-4" style="text-decoration: none; color: black;">Back</a>
+        {% endblock submit %}
+    </form> 
+{% endblock content %}

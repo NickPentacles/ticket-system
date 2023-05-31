@@ -1,0 +1,6 @@
+{% extends "includes/forms_submit.html" %}
+
+{% block submit %}
+<button type="submit" class="btn">Edit</button>
+<a href="{% url 'users:list' %}" class="btn mx-4" style="text-decoration: none; color: black;">Back</a>
+{% endblock submit %}

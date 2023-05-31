@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% csrf_token %}
+
+{% block content %}
+<table class="table">
+  {% include 'includes/thead.html' %} 
+  <tbody>
+    {% for i in data %}
+    <tr class="{% include 'includes/tr_color.html' %}">
+        {% block list %}{% endblock list %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}
