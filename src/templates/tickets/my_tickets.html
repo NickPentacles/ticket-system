@@ -1,0 +1,18 @@
+{% extends "includes/list.html" %}
+
+{% block title %}
+  Мои заявки
+{% endblock title %}
+
+{% block list %}
+<td>{{ i.request.name }}</td>
+<td>{{ i.request.description }}</td>
+<td>{{ i.executor }}</td>
+<td>{{ i.status }}</td>
+<td>{{ i.deadline}}</td>
+<td>
+  {% if i.status == '2' %}
+  <a href="{% url "tickets:delete_tickets" i.request.id %}">Delete</a>
+  {% endif %}
+</td>
+{% endblock list %}

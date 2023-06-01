@@ -1,0 +1,26 @@
+{% extends "includes/list.html" %}
+
+{% block title %}
+  Список заявок
+{% endblock title %}
+
+{% block list %}
+<td>{{ i.creator }}</td>
+<td>{{ i.request.name }}</td>
+<td>{{ i.request.description }}</td>
+<td>{{ i.executor }}</td>
+<td>{{ i.get_status_display }}</td>
+<td>{{ i.request.created }}</td>
+<td>{{ i.deadline }}</td>
+<td>
+  {% if user.is_superuser %}
+  {% if i.status != '3' and i.status != '4' %}
+  <a href="{% url 'tickets:edit_tickets' i.id %}">Edit</a> | 
+  <a href="{% url 'tickets:delete_tickets' i.request.id %}">Delete</a> |
+  {% if i.status == '2' %}
+  <a href="{% url 'tickets:complete_tickets' i.id %}">Complete</a>
+  {% endif %}
+  {% endif %}
+  {% endif %}
+</td>
+{% endblock list %}

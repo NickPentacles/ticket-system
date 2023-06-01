@@ -14,9 +14,9 @@ class AbstractList(ListView):
     context = {}
     fields = []
 
-    def update_failed(self):
+    def check_failed(self):
         self.model.objects.filter(status=Statuses.SUBMIT,
-        deadline__lt=date.today()).update(status=Statuses.FAIL)
+                                  deadline__lt=date.today()).update(status=Statuses.FAIL)
 
     def patch_context(self):
         self.context['fields'] = self.fields
@@ -24,87 +24,89 @@ class AbstractList(ListView):
     def get_context_data(self, **kwargs):
         self.context = super().get_context_data(**kwargs)
         self.patch_context()
-        self.update_failed()
+        self.check_failed()
 
         return self.context
 
 
 class AllTickets(AbstractList):
     model = Ticket
-    template_name = 'requests/list.html'
+    template_name = 'tickets/all_tickets.html'
     fields = ['Creator', 'Name', 'Description',
               'Executor', 'Status', 'Created', 'Deadline']
 
     def patch_context(self):
         super().patch_context()
         data = self.model.objects.select_related("creator",
-                                                    "executor",
-                                                    "request")
+                                                 "executor",
+                                                 "request")
         self.context["data"] = data
 
 
 class MyTickets(AbstractList):
     model = Ticket
-    template_name = 'requests/requests.html'
+    template_name = 'tickets/my_tickets.html'
     fields = ['Name', 'Description',
               'Executor', 'Status', 'Deadline']
 
     def patch_context(self):
         super().patch_context()
         data = self.model.objects.select_related("creator",
-                                                    "executor",
-                                                    "request"
-        ).filter(creator=self.request.user)
+                                                 "executor",
+                                                 "request"
+                                                 ).filter(creator=self.request.user)
         self.context["data"] = list(data)
 
 
 class PendingTickets(AbstractList):
     model = Ticket
-    template_name = 'requests/pending_requests.html'
+    template_name = 'tickets/pending_tickets.html'
     fields = ['Creator', 'Name', 'Description',
               'Status', 'Created', 'Deadline']
 
     def patch_context(self):
         super().patch_context()
         data = self.model.objects.select_related("request",
-                                                    "creator"
-        ).filter(executor=self.request.user)
+                                                 "creator"
+                                                 ).filter(executor=self.request.user)
         self.context["data"] = list(data)
 
 
 class CreateTicket(CreateView):
     form_class = CreateTicketForm
-    template_name = 'requests/create.html'
+    template_name = 'tickets/create_tickets.html'
 
     def form_valid(self, form):
         form = form.save()
-        cer = Ticket(creator=self.request.user,
-                                     executor=None,
-                                     request=form,
-                                     deadline=None,
-                                     status=Statuses.HOLD)
-        cer.save()
-        return redirect('requests:my_requests')
+        ticket = Ticket(creator=self.request.user,
+                        executor=None,
+                        request=form,
+                        deadline=None,
+                        status=Statuses.HOLD)
+        ticket.save()
+        return redirect('tickets:all_tickets')
 
 
 class EditTicket(UpdateView):
     model = Ticket
     form_class = EditTicketForm
-    template_name = 'requests/edit.html'
+    template_name = 'tickets/edit_tickets.html'
 
     def form_valid(self, form):
         self.object.status = Statuses.SUBMIT
         form.save()
-        return redirect('requests:list')
+        return redirect('tickets:all_tickets')
 
 
 class DeleteTicket(DeleteView):
     model = Request
 
-    def get_success_url(self) -> str:
-        return reverse_lazy('requests:list')
+    def get_success_url(self):
+        return reverse_lazy('tickets:all_tickets')
 
 
 def complete_ticket(request, pk):
-    Ticket.objects.get(id=pk).update(status=Statuses.SUBMIT)
-    return redirect('requests:list')
+    ticket = Ticket.objects.get(id=pk)
+    ticket.status = Statuses.COMPLETE
+    ticket.save()
+    return redirect('tickets:all_tickets')

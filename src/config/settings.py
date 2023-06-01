@@ -15,10 +15,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "requests.apps.RequestsConfig",
-    "authentication.apps.AuthenticationConfig",
     "users.apps.UsersConfig",
-    "core.apps.CoreConfig",
+    "tickets.apps.TicketsConfig",
 ]
 
 MIDDLEWARE = [
@@ -29,7 +27,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "core.middleware.authrequiredmiddleware.AuthRequiredMiddleware",
+    "users.middleware.authrequiredmiddleware.AuthRequiredMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -58,7 +56,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": BASE_DIR / "../db.sqlite3",
     }
 }
 

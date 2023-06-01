@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}
+  Список пользователей
+{% endblock title %}
+
+{% block content %}
+<table class="table">
+  {% include 'includes/thead.html' %}
+  <tbody>
+    {% for i in data %}
+    <tr class="bg-light">
+      <th scope="row">{{ i.id }}</th>
+      <td>{{ i.username }}</td>
+      <td>{{ i.email }}</td>
+      <td>
+        <a href="{% url "users:edit_users" i.id %}">Edit</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}

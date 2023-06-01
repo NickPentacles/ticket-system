@@ -1,0 +1,10 @@
+{% extends "includes/forms_submit.html" %}
+
+{% block title %}
+Создать заявку
+{% endblock title %}
+
+{% block submit %}
+<button type="submit" class="btn">Create</button>
+<a href="{% url 'tickets:all_tickets' %}" class="btn mx-4" style="text-decoration: none; color: black;">Back</a>
+{% endblock submit %}

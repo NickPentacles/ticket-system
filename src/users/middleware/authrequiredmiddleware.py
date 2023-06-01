@@ -10,5 +10,5 @@ class AuthRequiredMiddleware(object):
         if request.path == '/login/' or request.path == '/register/':
             return response
         if not request.user.is_authenticated:
-            return redirect('authentication:login')
+            return redirect('users:login_users')
         return response

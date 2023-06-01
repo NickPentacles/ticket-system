@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from core.models import Request, CreatorRequestExecutor
+from .models import Request, Ticket
 
 
 class CreateTicketForm(ModelForm):
@@ -17,7 +17,7 @@ class CreateTicketForm(ModelForm):
 class EditTicketForm(ModelForm):
 
     class Meta:
-        model = CreatorRequestExecutor
+        model = Ticket
         fields = ['executor', 'deadline']
         widgets = {
             'executor': forms.Select(attrs={'class': "form-control"}, ),

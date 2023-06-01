@@ -1,37 +1,35 @@
 {% load static %}
 {% csrf_token %}
 
-{% with user.is_authenticated as logged %}
 <header>
-  {% if logged %}
+  {% if user.is_authenticated %}
   <nav class="navbar navbar-expand-sm navbar-dark"
         style="background-color: #3B71CA">
     <div class="collapse navbar-collapse">
       <span style="color: #FBFBFB">{{ user.username }}</span>
       <ul class="navbar-nav mr-auto ml-5">
         <li class="nav-item ">
-          <a class="nav-link" href="{% url 'requests:create' %}">New Request</a>
+          <a class="nav-link" href="{% url 'tickets:create_tickets' %}">New Request</a>
         </li>
         <li class="nav-item ml-3">
-          <a class="nav-link" href="{% url 'requests:my_requests' %}">My Requests</a>
+          <a class="nav-link" href="{% url 'tickets:my_tickets' %}">My Requests</a>
         </li>
         <li class="nav-item ml-3">
-          <a class="nav-link" href="{% url 'requests:pending' %}">Pending Requests</a>
+          <a class="nav-link" href="{% url 'tickets:pending_tickets' %}">Pending Requests</a>
         </li>
         <li class="nav-item ml-3">
-          <a class="nav-link" href="{% url 'requests:list' %}">All Requests</a>
+          <a class="nav-link" href="{% url 'tickets:all_tickets' %}">All Requests</a>
         </li>
         {% if user.is_superuser %}
         <li class="nav-item ml-3">
-          <a class="nav-link" href="{% url 'users:list' %}">Users</a>
+          <a class="nav-link" href="{% url 'users:all_users' %}">Users</a>
         </li>
         {% endif %}
       </ul>
-      <a class="nav-link " style="color: #FBFBFB" href="{% url 'authentication:logout' %}">
+      <a class="nav-link " style="color: #FBFBFB" href="{% url 'users:logout_users' %}">
         Logout
       </a>
     </div>
     {% endif %}
   </nav>
 </header>
-{% endwith %}

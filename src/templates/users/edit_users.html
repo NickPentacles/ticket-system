@@ -1,0 +1,10 @@
+{% extends "includes/forms_submit.html" %}
+
+{% block title %}
+Редактировать профиль
+{% endblock title %}
+
+{% block submit %}
+<button type="submit" class="btn">Edit</button>
+<a href="{% url 'users:all_users' %}" class="btn mx-4" style="text-decoration: none; color: black;">Back</a>
+{% endblock submit %}

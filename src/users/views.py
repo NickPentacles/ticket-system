@@ -13,18 +13,18 @@ User = get_user_model()
 
 class LoginUser(LoginView):
     form_class = LoginUserForm
-    template_name = 'login/login.html'
+    template_name = 'users/login_users.html'
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(**kwargs)
 
-    def get_success_url(self) -> str:
-        return reverse_lazy('requests:list')
+    def get_success_url(self):
+        return reverse_lazy('tickets:all_tickets')
 
 
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
-    template_name = 'login/register.html'
+    template_name = 'users/register_users.html'
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(**kwargs)
@@ -32,23 +32,23 @@ class RegisterUser(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('requests:list')
+        return redirect('tickets:all_tickets')
 
 
 def logout_user(request):
     logout(request)
-    return redirect('authentication:login')
+    return redirect('users:logout_users')
 
 
 def redirection(request):
     if request.user.is_authenticated:
-        return redirect('requests:list')
-    return redirect('login/')
+        return redirect('tickets:all_tickets')
+    return redirect('users:login_users')
 
 
 class UserList(ListView):
     model = User
-    template_name = 'users/list.html'
+    template_name = 'users/all_users.html'
     fields = ['id', 'Name', 'Email']
 
     def get_context_data(self, **kwargs):
@@ -62,8 +62,8 @@ class UserList(ListView):
 class EditUser(UpdateView):
     model = User
     form_class = EditUserForm
-    template_name = 'users/edit.html'
+    template_name = 'users/edit_users.html'
 
     def form_valid(self, form):
         form.save()
-        return redirect('users:list')
+        return redirect('users:all_users')
